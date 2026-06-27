@@ -47,7 +47,7 @@ function addNode(prevValue: number, insertValue: number, head: ListNode | null) 
 function deleteNode(head: ListNode | null, deleteValue: number) {
     // Find node with delete value
     let current = head;
-    let currentSave = head
+    let currentSave = head;
 
     if (head !== null && deleteValue === head.val) {
         head = head.next;
@@ -69,6 +69,36 @@ function deleteNode(head: ListNode | null, deleteValue: number) {
     return head;
 }
 
+// Function to reverse a linked list
+function reverseLinkedList(head: ListNode | null) {
+    if (head === null || head.next === null) {
+        return head;
+    }
+
+    let current: ListNode | null = head;
+    let next: ListNode | null = head.next;
+    let saveNext: ListNode | null;
+
+    head.next = null;
+
+    while (next !== null) { 
+        // Saves next value before re-assigning next so that it's not lost     
+        saveNext = next.next;
+
+        // Points next.next to current, thereby reversing this part of the list
+        next.next = current;
+
+        // current moves one forward in the array
+        current = next;
+
+        // next moves one forward in the array
+        next = saveNext;
+    }
+    
+    head = current;
+    return head;
+}
+
 // Create a linked list
 let head: ListNode | null = new ListNode(2);
 const second = new ListNode(8);
@@ -81,16 +111,22 @@ second.next = third;
 third.next = fourth;
 fourth.next = fifth;
 
+// Run functions
 console.log('INITIAL');
 traverseLinkedList(head);
 
-addNode(7, 222, head);
+// addNode(7, 222, head);
 
-console.log('\nAFTER ADDING');
-traverseLinkedList(head);
+// console.log('\nAFTER ADDING');
+// traverseLinkedList(head);
 
 
-head = deleteNode(head, 2);
+// head = deleteNode(head, 2);
 
-console.log('\nAFTER DELETING');
+// console.log('\nAFTER DELETING');
+// traverseLinkedList(head);
+
+
+console.log('\nAFTER REVERSING');
+head = reverseLinkedList(head);
 traverseLinkedList(head);
