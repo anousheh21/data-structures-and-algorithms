@@ -91,3 +91,5 @@ const outputMaxProfit2 = maxProfit2(prices2);
 console.log(outputMaxProfit2);
 
 // Time Complexity of Optimal Solution: O(n)
+
+export {}

@@ -41,3 +41,5 @@ const efficientOutput = runningSumEfficient(efficientNums);
 console.log("Efficient Running Sum: ", efficientOutput);
 
 // Time Complexity: O(n)
+
+export {}
