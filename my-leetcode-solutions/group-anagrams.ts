@@ -1,7 +1,59 @@
 // My solution to 49 - Group Anagrams
 
+// Optimised Approach
+function groupAnagrams(strs: string[]) {
+    const anagramMap = new Map<string, string[]>();
+
+    for(let i = 0; i < strs.length; i++) {
+        const sortedString = orderedLetters(strs[i]);
+        if (anagramMap.has(sortedString)) {
+            const values = anagramMap.get(sortedString);
+            values?.push(strs[i]);
+        } else {
+            anagramMap.set(sortedString, [strs[i]]);
+        }
+    }
+
+    // Turn map into string[][]
+    const outputArray: string[][] = [];
+    for(const value of anagramMap.values()) {
+        outputArray.push(value);
+    }
+
+    return outputArray;
+}
+
+// Takes in a string, and returns another string where the characters have been arranged in alphabetical order
+function orderedLetters(str: string): string {
+    const strArray = [...str];
+    strArray.sort()
+    return strArray.join("");
+}
+
+// const testCases2 = [["bat", "tab"], ["cat", "sat"], ["", ""], ["b", ""], ["", "b"]];
+// for(let i = 0; i < testCases2.length; i++) {
+//     const output = isPairAnagram(testCases2[i][0], testCases2[i][1]);
+//     console.log(`${output}: ${testCases2[i][0]} and ${testCases2[i][1]} are anagrams`);
+// }
+
+// Time Complexity: 
+
+const testCases = [
+    ["eat", "tea", "tan", "ate", "nat", "bat"],
+    [""],
+    ["a"],
+    ["cat", "tac", "bat", "catc"],
+    ["","b",""]
+];
+
+for(let i = 0; i < testCases.length; i++) {
+    const output = groupAnagrams(testCases[i]);
+    // console.log(`Output: ${output} for input: ${testCases[i]}`);
+    console.log(`Output: ${JSON.stringify(output)} for input: ${JSON.stringify(testCases[i])}`);
+}
+
 // Brute force approach
-function groupAnagrams(strs: string[]): string[][] {
+function groupAnagramsBruteForce(strs: string[]): string[][] {
     // Make first of the anagram set a key of a map. Value is array of all anagrams of that
 
     // For each string, if you can find an anagram that is a key of the Map, append it to the values array. Otherwise make that a key and create an array with that value.
@@ -63,28 +115,6 @@ function createStringMap(str: string): Map<string, number> {
     }
 
     return strMap;
-}
-
-const testCases2 = [["bat", "tab"], ["cat", "sat"], ["", ""], ["b", ""], ["", "b"]];
-for(let i = 0; i < testCases2.length; i++) {
-    const output = isPairAnagram(testCases2[i][0], testCases2[i][1]);
-    console.log(`${output}: ${testCases2[i][0]} and ${testCases2[i][1]} are anagrams`);
-}
-
-// Time Complexity: 
-
-const testCases = [
-    ["eat", "tea", "tan", "ate", "nat", "bat"],
-    [""],
-    ["a"],
-    ["cat", "tac", "bat", "catc"],
-    ["","b",""]
-];
-
-for(let i = 0; i < testCases.length; i++) {
-    const output = groupAnagrams(testCases[i]);
-    // console.log(`Output: ${output} for input: ${testCases[i]}`);
-    console.log(`Output: ${JSON.stringify(output)} for input: ${JSON.stringify(testCases[i])}`);
 }
 
 export {};
