@@ -13,10 +13,33 @@
  */
 
 function reverseList(head: ListNode | null): ListNode | null {
-    
+    let prev = head;
+    let current = head?.next;
+    let next = head?.next?.next;
+
+    if (prev !== null && prev!.next !== null) {
+        prev!.next = null;
+    }
+
+    if (prev !== null && current === null) {
+        return prev;
+    }
+
+    while (current !== undefined && next !== null) {
+        current!.next = prev;
+        prev = current;
+        current = next;
+        next = next?.next;
+    }
+
+    if (current !== null && current !== undefined) {
+        current.next = prev;
+    }
+
+    return current ? current : null;
 };
 
-// Time Complexity:
+// Time Complexity: O(n)
 
 class ListNode {
     val: number
@@ -31,7 +54,8 @@ class ListNode {
 const headTestCases = [
     [1, 2, 3, 4, 5],
     [1, 2],
-    []
+    [],
+    [1],
 ];
 
 for (let i = 0; i < headTestCases.length; i++) {
