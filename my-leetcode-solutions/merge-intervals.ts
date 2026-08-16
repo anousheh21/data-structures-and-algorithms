@@ -10,6 +10,10 @@ function merge(intervals: number[][]): number[][] {
     let currentInterval = intervals[0];
     let last2Merged: boolean = true;
 
+    // console.log("currentStart:", currentStart);
+    // console.log("currentEnd:", currentEnd);
+    // console.log("currentInterval:", currentInterval);
+
     for(let i = 0; i < intervals.length - 1; i++) {
         // let currentEnd = intervals[i][1];
         let nextStart = intervals[i+1][0];
@@ -19,7 +23,8 @@ function merge(intervals: number[][]): number[][] {
             // update current end and current interval
 
             // currentEnd = intervals[i+1][1]
-            currentEnd = intervals[i+1][1] > intervals[i][1] ? intervals[i+1][1] : intervals[i][1];
+            // currentEnd = intervals[i+1][1] > intervals[i][1] ? intervals[i+1][1] : intervals[i][1];
+             currentEnd = intervals[i+1][1] > currentInterval[1] ? intervals[i+1][1] : currentInterval[1];
             currentInterval = [currentStart, currentEnd];
             last2Merged = true;
 
@@ -31,33 +36,35 @@ function merge(intervals: number[][]): number[][] {
             // mergedIntervals.push(currentInterval)
             last2Merged = false;
         }
+
+        // console.log("nextStart:", nextStart);
+        // console.log("currentStart:", currentStart);
+        // console.log("currentEnd:", currentEnd);
+        // console.log("currentInterval:", currentInterval);
     }
 
-    if (last2Merged === false) {
-             mergedIntervals.push(currentInterval);
-        currentStart = intervals[intervals.length - 1][0];
-        currentEnd = intervals[intervals.length - 1][1];
-        currentInterval = [currentStart, currentEnd];
-    }
-
-    const lastInterval = intervals[intervals.length - 1];
-
-    if(last2Merged === true) {
-        mergedIntervals.push(currentInterval);
-    } else if (last2Merged === false && lastInterval[0] > currentInterval[1]) {
-        mergedIntervals.push(lastInterval);
-    } else if (last2Merged === false && lastInterval[0] > currentInterval[1]) {
-        currentInterval = [lastInterval[0], currentInterval[1]];
-        mergedIntervals.push(currentInterval)
-    }
-    
-
-    // mergedIntervals.push(currentInterval);
+    // if (last2Merged === false) {
+    //          mergedIntervals.push(currentInterval);
+    //     currentStart = intervals[intervals.length - 1][0];
+    //     currentEnd = intervals[intervals.length - 1][1];
+    //     currentInterval = [currentStart, currentEnd];
+    // }
 
     // const lastInterval = intervals[intervals.length - 1];
 
-
+    // if(last2Merged === true) {
+    //     mergedIntervals.push(currentInterval);
+    // } else if (last2Merged === false && lastInterval[0] > currentInterval[1]) {
+    //     mergedIntervals.push(lastInterval);
+    // } else if (last2Merged === false && lastInterval[0] > currentInterval[1]) {
+    //     currentInterval = [lastInterval[0], currentInterval[1]];
+    //     mergedIntervals.push(currentInterval)
+    // }
     
+
+    mergedIntervals.push(currentInterval);
+
+    // const lastInterval = intervals[intervals.length - 1];
 
     return mergedIntervals;
 };
