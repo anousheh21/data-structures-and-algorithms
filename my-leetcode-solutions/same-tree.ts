@@ -15,7 +15,21 @@
  */
 
 function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
-    
+    if(p === null && q === null) {
+        return true;
+    } else if (p === null || q === null) {
+        return false;
+    }
+
+    if (isSameTree(p.left, q.left) === false) {
+        return false;
+    } else if (isSameTree(p.right, q.right) === false) {
+        return false;
+    } else {
+        isSameTree(p.left, q.left);
+        isSameTree(p.right, q.right);
+        return true;
+    }
 };
 
 // Time Complexity:
