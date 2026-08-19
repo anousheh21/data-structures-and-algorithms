@@ -14,8 +14,6 @@
  * }
  */
 
-// The problem is that right now this is just checking the structure of the tree. So for checking that trees are structurally the same, this is correct. But it does not check values at all, which is where it breaks, and what you need to fix!
-
 function isSameTree(p: TreeNode | null, q: TreeNode | null): boolean {
     if(p === null && q === null) {
         return true;
