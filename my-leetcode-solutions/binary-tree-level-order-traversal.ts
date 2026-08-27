@@ -15,10 +15,40 @@
  */
 
 function levelOrder(root: TreeNode | null): number[][] {
-    
+    // a queue is first in first out
+
+    const outputQueue: number[][] = [];
+    let queue: TreeNode[] = [];
+
+    if (root !== null) {
+        queue.push(root);
+    } else {
+        return [];
+    }
+
+    while(queue.length > 0) {
+        const newQueue: TreeNode[] = [];
+
+        for(let i = 0; i < queue.length; i++) {
+            if (queue[i].left !== null) {
+                newQueue.push(queue[i].left!);
+            }
+
+            if (queue[i].right !== null) {
+                newQueue.push(queue[i].right!);
+            }
+        }
+
+        const valQueue = queue.map((x) => x.val);
+        outputQueue.push(valQueue);
+
+        queue = newQueue;
+    }
+
+    return outputQueue;
 };
 
-// Time Complexity:
+// Time Complexity: O(n^2)
 
 class TreeNode {
     val: number
@@ -36,6 +66,7 @@ const rootTestCases = [
     new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7))),
     new TreeNode(1),
     null,
+    new TreeNode(3, new TreeNode(9, new TreeNode(1), new TreeNode(2)), new TreeNode(20, new TreeNode(15), new TreeNode(7))),
 ];
 
 for (let i = 0; i < rootTestCases.length; i++) {
@@ -44,3 +75,11 @@ for (let i = 0; i < rootTestCases.length; i++) {
 }
 
 export {};
+
+
+// create a queue
+// put root node in the queue
+// find children of each node in the queue
+// put children in the queue
+// find children of each node in the queue
+// stop when all children of each node in the queue is null (so when the queue is empty at the start of the new loop)
