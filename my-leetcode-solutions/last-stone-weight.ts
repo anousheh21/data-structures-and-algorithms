@@ -1,36 +1,23 @@
 // My solution to 1046 - Last Stone Weight
 
 function lastStoneWeight(stones: number[]): number {
-    // Turn stones into a max heap - loop through and heapifyDown every node
+    // Turn stones into a max heap - loop through and heapifyUp every node
     for(let i = 0; i < stones.length; i++) {
         heapifyUp(stones, i);
     }
 
-    // console.log(stones)
-
-    // let count = 0;
     while(stones.length > 1) {
         // Remove max value and store it in variable y. The removal function should ensure the thing is still a heap.
         let y = removeRoot(stones);
-        // console.log('remove for y', stones);
-        // console.log('y', y);
-
-
+    
         // Remove max value and store it in variable x
         const x = removeRoot(stones);
-        // console.log('remove for x', stones);
-        // console.log('x', x);
-
 
         // If y > x, do y - x and add that node back into the heap. If x==y, do not add back to the heap
         if (y > x) {
             y = y - x;
             addValue(stones, y);
-            // console.log('add value', stones);
         }
-
-        // console.log('final stones', stones);
-        // count ++;
     }
 
     if (stones.length === 1) {
@@ -92,21 +79,15 @@ function heapifyDown(heapArray: number[]) {
     let movingValueIndex = 0;
     const movingValue = heapArray[0];
 
-    // console.log('heaparray at start', heapArray)
-
     let leftChildIndex = 2 * movingValueIndex + 1;
     let rightChildIndex = 2 * movingValueIndex + 2;
 
     while(leftChildIndex < heapArray.length && (heapArray[movingValueIndex] <= heapArray[leftChildIndex] || heapArray[movingValueIndex] <= heapArray[rightChildIndex])) {
         let minChildIndex = leftChildIndex;
-        // const rightChildIndex = 2 * movingValueIndex + 2;
 
         if (rightChildIndex < heapArray.length && heapArray[rightChildIndex] >= heapArray[leftChildIndex]) {
             minChildIndex = rightChildIndex;
         }
-
-        // console.log('minchildindex', minChildIndex);
-        // console.log('min child', heapArray[minChildIndex]);
 
         // swap movingValue and minChild
         heapArray[movingValueIndex] = heapArray[minChildIndex];
@@ -116,8 +97,6 @@ function heapifyDown(heapArray: number[]) {
         movingValueIndex = minChildIndex;
         leftChildIndex = 2 * movingValueIndex + 1;
         rightChildIndex = 2 * movingValueIndex + 2;
-
-        // console.log('heaparray end of loop', heapArray)
     }
 }
 
