@@ -6,7 +6,7 @@ function lastStoneWeight(stones: number[]): number {
         heapifyUp(stones, i);
     }
 
-    console.log(stones)
+    // console.log(stones)
 
     // let count = 0;
     while(stones.length > 1) {
@@ -26,9 +26,10 @@ function lastStoneWeight(stones: number[]): number {
         if (y > x) {
             y = y - x;
             addValue(stones, y);
+            // console.log('add value', stones);
         }
 
-        console.log('final stones', stones);
+        // console.log('final stones', stones);
         // count ++;
     }
 
@@ -94,14 +95,18 @@ function heapifyDown(heapArray: number[]) {
     // console.log('heaparray at start', heapArray)
 
     let leftChildIndex = 2 * movingValueIndex + 1;
+    let rightChildIndex = 2 * movingValueIndex + 2;
 
-    while(leftChildIndex < heapArray.length && heapArray[movingValueIndex] <= heapArray[leftChildIndex]) {
+    while(leftChildIndex < heapArray.length && (heapArray[movingValueIndex] <= heapArray[leftChildIndex] || heapArray[movingValueIndex] <= heapArray[rightChildIndex])) {
         let minChildIndex = leftChildIndex;
-        const rightChildIndex = 2 * movingValueIndex + 2;
+        // const rightChildIndex = 2 * movingValueIndex + 2;
 
         if (rightChildIndex < heapArray.length && heapArray[rightChildIndex] >= heapArray[leftChildIndex]) {
             minChildIndex = rightChildIndex;
         }
+
+        // console.log('minchildindex', minChildIndex);
+        // console.log('min child', heapArray[minChildIndex]);
 
         // swap movingValue and minChild
         heapArray[movingValueIndex] = heapArray[minChildIndex];
@@ -110,12 +115,20 @@ function heapifyDown(heapArray: number[]) {
         // update movingValueIndex and leftChildIndex
         movingValueIndex = minChildIndex;
         leftChildIndex = 2 * movingValueIndex + 1;
+        rightChildIndex = 2 * movingValueIndex + 2;
+
+        // console.log('heaparray end of loop', heapArray)
     }
 }
 
 // Time Complexity:
 
-const testCases = [[2, 7, 4, 1, 8, 1], [1], [2,6,6,9,4,3], [6,8,10,1,10,2,7,4]];
+const testCases = [
+    [2, 7, 4, 1, 8, 1], 
+    [1], 
+    [2,6,6,9,4,3], 
+    [6,8,10,1,10,2,7,4]
+];
 
 for (let i = 0; i < testCases.length; i++) {
     const input = [...testCases[i]]
