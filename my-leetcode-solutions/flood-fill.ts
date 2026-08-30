@@ -1,7 +1,37 @@
 // My solution to 733 - Flood Fill
 
-function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {
-    
+function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {    
+    const visited = new Set<string>();
+    function helper(sr: number, sc: number, visited: Set<string>) {
+        const up = sr - 1;
+        const down = sr + 1;
+        const left = sc - 1;
+        const right = sc + 1;
+
+        // Base case 1: no adjacent pixels with the same colour
+        if (sr < 0 || sr >= image.length) {
+            return;
+        };
+
+        if (sc < 0 || sc >= image[0].length) {
+            return;
+        }
+
+        if (visited.has(`${sr},${sc}`)) {
+            return;
+        }
+
+        visited.add(`${sr},${sc}`);
+        console.log([sr, sc]);
+        helper(up, sc, visited);
+        helper(down, sc, visited);
+        helper(sr, left, visited);
+        helper(sr, right, visited);
+
+    }
+
+    return helper(sr, sc, visited);
+   
 };
 
 // Time Complexity:
@@ -25,3 +55,8 @@ export {};
 
 // Start at image[sr][sc]. Set originalColour to the starting colour of that pixel.
 // DFS: for each node that has the same colour as originalColour, change it's colour to colour. As soon as you reach a node whose colour is not originalColor, that's a base case, so it will go back up the call stack. So for each bit, you check the two neighbours of the current node. 
+
+
+
+// Depth first search. Base case is if a node does not exist or a node does not have the same colour as the original
+// Can you do depth first search and print out the nodes in the order that they are visited?
