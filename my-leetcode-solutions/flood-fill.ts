@@ -2,7 +2,9 @@
 
 function floodFill(image: number[][], sr: number, sc: number, color: number): number[][] {    
     const visited = new Set<string>();
-    function helper(sr: number, sc: number, visited: Set<string>) {
+    const startingPxColor = image[sr][sc];
+
+    function helper(sr: number, sc: number) {
         const up = sr - 1;
         const down = sr + 1;
         const left = sc - 1;
@@ -17,20 +19,25 @@ function floodFill(image: number[][], sr: number, sc: number, color: number): nu
             return;
         }
 
+        if (image[sr][sc] !== startingPxColor) {
+            return;
+        }
+
         if (visited.has(`${sr},${sc}`)) {
             return;
         }
 
         visited.add(`${sr},${sc}`);
-        console.log([sr, sc]);
-        helper(up, sc, visited);
-        helper(down, sc, visited);
-        helper(sr, left, visited);
-        helper(sr, right, visited);
+        image[sr][sc] = color;
 
+        helper(up, sc);
+        helper(down, sc);
+        helper(sr, left);
+        helper(sr, right);
     }
 
-    return helper(sr, sc, visited);
+    helper(sr, sc);
+    return image;
    
 };
 
