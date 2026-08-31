@@ -9,35 +9,100 @@ function numIslands(grid: string[][]): number {
     const numberOfColumns = grid[0].length;
     const numberOfRows = grid.length;
 
-    const layersExplored: number[][][] = [];
-    let layerSize = queue.length;
-    let currentLayer: number[][] = [];
+    // const layersExplored: number[][][] = [];
+    // let layerSize = queue.length;
+    // let currentLayer: number[][] = [];
+
+    let numberOfIslands = 0;
 
     while (queue.length > 0) {
-        let current: number[];
+        const current = queue.shift()!;
+        // console.log(current);
 
-        if(currentLayer.length < layerSize) {
-            current = queue.shift()!
-            currentLayer.push(current);
-        } else {
-            layersExplored.push(currentLayer);
-            layerSize = queue.length;
-            current = queue.shift()!
-            currentLayer = [];
-            currentLayer.push(current);
-        }
+        // if(currentLayer.length < layerSize) {
+        //     current = queue.shift()!
+        //     currentLayer.push(current);
+        // } else {
+        //     layersExplored.push(currentLayer);
+        //     layerSize = queue.length;
+        //     current = queue.shift()!
+        //     currentLayer = [];
+        //     currentLayer.push(current);
+        // }
         
         // first calculate neighbours of current to iterate through
         // current will have at most four neighbours
-        const currentNeighbours: number[][] = [];
+       
 
-        // check left neighbour
-        if(current[0] - 1 >=0) {
+       const currentNeighbours =  getNeighbours(current, numberOfRows, numberOfColumns)
+
+        for(const n of currentNeighbours) {
+            const stringN: string = `${n[0]},${n[1]}`;
+            if (!visitedSet.has(stringN)) {
+                visitedSet.add(stringN);
+                
+                // add to queue
+                // console.log(grid[n[0]][n[1]])
+
+                const currentVal = grid[n[0]][n[1]];
+
+                if(currentVal === "1") {
+                    numberOfIslands++;
+
+                    // all 1's connected to current position should be added to the visitedSet
+                    const queue2: number[][] = [n];
+                    while(queue2.length > 0) {
+                        
+                    }
+                    getNeighbours(n, numberOfRows, numberOfColumns);
+                }
+
+
+                queue.push(n);
+               
+            }
+        }
+    }
+
+    // layersExplored.push(currentLayer);
+
+    // let numberOfIslands: number = 0;
+    // let isIsland = false;
+
+    // for(const layer of layersExplored) {
+    //     // If isIsland = false and layer contains a value that is 1, do numberOfIslands++ and set isIsland to true
+
+    //     // If isIsland = true and layer contains no 1's, set isIsland to false
+
+    //     const layerValues: string[] = [];
+    //     for (const pos of layer) {
+    //         layerValues.push(grid[pos[0]][pos[1]]);
+    //         // console.log(pos)
+    //     }
+
+    //     if(isIsland == false && layerValues.includes('1')) {
+    //         numberOfIslands++;
+    //         isIsland = true;
+    //     } else if (isIsland = true && !layerValues.includes('1')) {
+    //         isIsland = false;
+    //     }
+
+    //     console.log(layerValues);
+    // }
+
+    // console.log(layersExplored)
+
+    return numberOfIslands;
+};
+
+function getNeighbours(current: number[], numberOfRows: number, numberOfColumns: number) {
+     const currentNeighbours: number[][] = [];
+    if(current[0] - 1 >=0) {
             currentNeighbours.push([current[0] - 1, current[1]]);
         }
 
         // check right neighbour
-        if(current[0] + 1 < numberOfColumns) {
+        if(current[0] + 1 < numberOfRows) {
             currentNeighbours.push([current[0] + 1, current[1]]);
         }
 
@@ -47,28 +112,12 @@ function numIslands(grid: string[][]): number {
         }
 
         // check downward neighbour
-        if(current[1] + 1 < numberOfRows) {
+        if(current[1] + 1 < numberOfColumns) {
             currentNeighbours.push([current[0], current[1] + 1]);
         }
 
-        for(const n of currentNeighbours) {
-            const stringN: string = `${n[0]},${n[1]}`;
-            if (!visitedSet.has(stringN)) {
-                visitedSet.add(stringN);
-                
-                // add to queue
-                queue.push(n);
-               
-            }
-        }
-    }
-
-    layersExplored.push(currentLayer);
-
-    for(const layer of layersExplored) {
-        console.log(layer);
-    }
-};
+        return currentNeighbours;
+}
 
 // Time Complexity:
 
