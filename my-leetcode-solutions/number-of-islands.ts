@@ -2,15 +2,33 @@
 
 function numIslands(grid: string[][]): number {
     // Implement breadth first search
-    const visitedSet = new Set<string>(`0,0`);
+    const start = [0,0];
+    const visitedSet = new Set<string>([`${start[0]},${start[1]}`]);
     const queue: number[][] = [[0,0]];
 
     const numberOfColumns = grid[0].length;
     const numberOfRows = grid.length;
 
+    const layersExplored: number[][][] = [];
+    let layerSize = queue.length;
+    let currentLayer: number[][] = [];
+
     while (queue.length > 0) {
-        const current = queue.shift();
-        console.log(current);
+        let current: number[];
+
+        if(currentLayer.length < layerSize) {
+            current = queue.shift()!
+            currentLayer.push(current);
+        } else {
+            layersExplored.push(currentLayer);
+            layerSize = queue.length;
+            current = queue.shift()!
+            currentLayer = [];
+            currentLayer.push(current);
+        }
+
+        // console.log(current);
+     
 
         // check every neighbour of current and add them to the queue if they are not in the visited set, also add them to the visited set
         
@@ -18,10 +36,12 @@ function numIslands(grid: string[][]): number {
         // current will have at most four neighbours
         const currentNeighbours: number[][] = [];
       
-        if (current === undefined) {
-            console.log("error, don't think this should have happened");
-            return -1;
-        }
+        // if (current === undefined) {
+        //     console.log("error, don't think this should have happened");
+        //     return -1;
+        // }
+
+        // layersExplored.push(current);
 
         // check left neighbour
         if(current[0] - 1 >=0) {
@@ -45,6 +65,7 @@ function numIslands(grid: string[][]): number {
 
         // now we have all the valid neighbours of the current node
         // iterate through the current neighbours, and if it is not in visited, then action on it
+        // const currentLayer: number[][] = [];
         for(const n of currentNeighbours) {
             const stringN: string = `${n[0]},${n[1]}`;
             if (!visitedSet.has(stringN)) {
@@ -52,9 +73,20 @@ function numIslands(grid: string[][]): number {
                 
                 // add to queue
                 queue.push(n);
+                // currentLayer.push(n);
+               
             }
         }
 
+        // layersExplored.push(currentLayer);
+
+    }
+
+    layersExplored.push(currentLayer);
+
+    // console.log(layersExplored);
+    for(const layer of layersExplored) {
+        console.log(layer);
     }
 };
 
