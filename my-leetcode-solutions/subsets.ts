@@ -1,7 +1,32 @@
 // My solution to 78 - Subsets
 
 function subsets(nums: number[]): number[][] {
-    
+    const results: number[][] = [[]];
+    const currentState: number[] = [];
+
+    function backtracking(results: number[][], currentState: number[]) {
+        // Base case
+        // stop once there are no more elements, or if there is a duplicate
+
+        for (const num of nums) {
+            // do we need another base case here, like if the thing already contains that number. or will that not return ,but just skip it?
+            if (currentState.includes(num)) {
+                return;
+            }
+
+            // push
+            currentState.push(num);
+
+            backtracking(results, currentState);
+
+            results.push([...currentState]);
+            // pop
+            currentState.pop();
+        }
+    }
+
+    backtracking(results, currentState);
+    return results;
 };
 
 // Time Complexity:
