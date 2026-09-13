@@ -5,32 +5,26 @@ function maxProfit(prices: number[]): number {
     let currentHeldShareIndex = 0;
     let holdingShare = false;
 
-    for(let i = 1; i < prices.length; i++) {
+      for(let i = 0; i < prices.length; i++) {
         if (!holdingShare) {
             // check decreasing values. as soon as you find an increasing value, hold the share before the increasing value
-            if(prices[i] > prices[i - 1]) {
-                currentHeldShareIndex = i - 1;
+            if(prices[i] < prices[i + 1]) {
+                currentHeldShareIndex = i;
                 holdingShare = true;
-
-                if(prices.length === 2) {
-                    maxProfit = prices[i] - prices[i - 1];
-                }
             }
 
             
         } else if (holdingShare) {
             // check increasing values. as soon as you find a decreasing value, sell the share before the decreasing value
-            if(prices[i] < prices[i - 1]) {
-                maxProfit = maxProfit + (prices[i - 1] - prices[currentHeldShareIndex]);
-                holdingShare = false;
-            } else if (i === prices.length - 1) {
+            if(prices[i] > prices[i + 1]) {
                 maxProfit = maxProfit + (prices[i] - prices[currentHeldShareIndex]);
-            }
+                holdingShare = false;
+            } 
         }
     }
 
     if (holdingShare) {
-        
+        maxProfit = maxProfit + (prices[prices.length - 1] - prices[currentHeldShareIndex]);
     }
 
     return maxProfit;
