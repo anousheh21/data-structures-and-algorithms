@@ -13,7 +13,8 @@ function shortestPathBinaryMatrix(grid: number[][]): number {
 
     // GENERIC BFS
     const queue: number[][] = [[0, 0]];
-    const visited = new Set<number[]>();
+    // const visited = new Set<number[]>();
+    const visited = new Set<string>();
 
     // grid of of size n x n
     const n: number = grid.length;
@@ -23,13 +24,13 @@ function shortestPathBinaryMatrix(grid: number[][]): number {
 
     while (queue.length > 0) {
         // pop top value off queue and add it to visited
-        const currentCoord = queue.pop()!;
+        const currentCoord = queue.shift()!;
         console.log(currentCoord);
 
-        visited.add(currentCoord);
+        visited.add(`${currentCoord[0]},${currentCoord[1]}`);
 
         // create a temp array with all nodes connected to the one popped off, that aren't in visited
-        const tempConnections: number[][] = [];
+
 
         const up = currentCoord[0] - 1 >= 0 ? [currentCoord[0] - 1, currentCoord[1]] : null;
         const down = currentCoord[0] + 1 < n ? [currentCoord[0] + 1, currentCoord[1]] : null;
@@ -44,16 +45,18 @@ function shortestPathBinaryMatrix(grid: number[][]): number {
         const directionArray = [up, down, left, right, upLeft, upRight, downLeft, downRight];
 
         for(const direction of directionArray) {
-            if(direction !== null && !visited.has(direction)) {
-                tempConnections.push(direction);
+            if(direction !== null && !visited.has(`${direction[0]},${direction[1]}`)) {
+                visited.add(`${direction[0]},${direction[1]}`);
+                queue.push(direction);
             }
         }
 
-        console.log(tempConnections)
+
 
         // Add all items in temp array to visited, and also to the back of the queue, and also to searched
         // and you need to change it to strings bc of the reference thing, it won't work properly
-        visited.add(...tempConnections)
+        // visited.add(...tempConnections)
+   
 
     }
 
