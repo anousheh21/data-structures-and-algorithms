@@ -7,30 +7,18 @@ function shortestPathBinaryMatrix(grid: number[][]): number {
     // If you get to a dead end and are about to backtrack, if the number you're at is greater than the current total, then store that as the max, but you must end up at the bottom right. Actually, I don't think this is DFS. I think this is BFS. 
 
 
-    // from the current
-
-    // maybe a good first step is just writing out bfs, then you can adapt it to the problem
-
     // GENERIC BFS
     const queue: number[][] = [[0, 0]];
-    // const visited = new Set<number[]>();
     const visited = new Set<string>();
 
     // grid of of size n x n
     const n: number = grid.length;
 
-    // searched can be gotten rid of for the final solution - that's just for the generic bfs
-    // const searched: number[][] = [];
-
     while (queue.length > 0) {
-        // pop top value off queue and add it to visited
         const currentCoord = queue.shift()!;
         console.log(currentCoord);
 
         visited.add(`${currentCoord[0]},${currentCoord[1]}`);
-
-        // create a temp array with all nodes connected to the one popped off, that aren't in visited
-
 
         const up = currentCoord[0] - 1 >= 0 ? [currentCoord[0] - 1, currentCoord[1]] : null;
         const down = currentCoord[0] + 1 < n ? [currentCoord[0] + 1, currentCoord[1]] : null;
@@ -51,11 +39,6 @@ function shortestPathBinaryMatrix(grid: number[][]): number {
             }
         }
 
-
-
-        // Add all items in temp array to visited, and also to the back of the queue, and also to searched
-        // and you need to change it to strings bc of the reference thing, it won't work properly
-        // visited.add(...tempConnections)
    
 
     }
