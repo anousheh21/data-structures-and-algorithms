@@ -1,22 +1,29 @@
 // My solution to 1091 - Shortest Path in Binary Matrix
 
 function shortestPathBinaryMatrix(grid: number[][]): number {
-    // DFS on a graph
-    // Keep track of visited nodes
-    // Count how many are visited on the current run
-    // If you get to a dead end and are about to backtrack, if the number you're at is greater than the current total, then store that as the max, but you must end up at the bottom right. Actually, I don't think this is DFS. I think this is BFS. 
-
-
-    // GENERIC BFS
     const queue: number[][] = [[0, 0]];
     const visited = new Set<string>();
+    let minLength = 0;
+    let currentCoord: number[] = [];
+
+    let levelBoundaryRem = 1;
+    let nextLevelCount = 0;
 
     // grid of of size n x n
     const n: number = grid.length;
 
+    if (grid[0][0] === 1) {
+        return -1;
+    }
+
     while (queue.length > 0) {
-        const currentCoord = queue.shift()!;
-        console.log(currentCoord);
+        currentCoord = queue.shift()!;
+        // console.log(grid[currentCoord[0]][currentCoord[1]]);
+
+        const currentVal = grid[currentCoord[0]][currentCoord[1]];
+
+        // console.log(grid[currentCoord[0]][currentCoord[1]]);
+        // console.log(currentCoord)
 
         visited.add(`${currentCoord[0]},${currentCoord[1]}`);
 
@@ -35,15 +42,38 @@ function shortestPathBinaryMatrix(grid: number[][]): number {
         for(const direction of directionArray) {
             if(direction !== null && !visited.has(`${direction[0]},${direction[1]}`)) {
                 visited.add(`${direction[0]},${direction[1]}`);
-                queue.push(direction);
+
+                if (grid[direction[0]][direction[1]] === 0) {
+                    queue.push(direction);
+                    nextLevelCount++;
+                }
+                
             }
         }
 
-   
+        levelBoundaryRem--;
+
+        // if(levelBoundaryRem === 0) {
+        //     levelBoundaryRem = nextLevelCount;
+        //     nextLevelCount = 0;
+        //     minLength++;
+        // }
+
+        if (currentCoord[0] === n - 1 && currentCoord[1] === n - 1) {
+            return minLength + 1;
+        }
+
+
+        if(levelBoundaryRem === 0) {
+            levelBoundaryRem = nextLevelCount;
+            nextLevelCount = 0;
+            minLength++;
+        }
 
     }
 
-
+    console.log(currentCoord)
+    return -1;
 };
 
 // Time Complexity:
@@ -52,6 +82,8 @@ const gridTestCases = [
     [[0, 1], [1, 0]],
     [[0, 0, 0], [1, 1, 0], [1, 1, 0]],
     [[1, 0, 0], [1, 1, 0], [1, 1, 0]],
+    [[0,0,1,0],[1,0,1,0],[1,1,0,1],[0,0,0,0]],
+    [[0,1,0,0,0],[0,1,0,0,0],[0,0,0,0,1],[0,1,1,1,0],[0,1,0,0,0]],
 ];
 
 for (let i = 0; i < gridTestCases.length; i++) {
