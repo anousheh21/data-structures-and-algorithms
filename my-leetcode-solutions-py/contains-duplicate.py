@@ -2,7 +2,12 @@
 
 class Solution:
     def containsDuplicate(self, nums: list[int]) -> bool:
-        pass
+        numsSet = {*nums}
+
+        if len(numsSet) == len(nums):
+            return False
+        else: 
+            return True
 
 
 # Time Complexity:
