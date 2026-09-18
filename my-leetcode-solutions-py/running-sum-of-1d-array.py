@@ -2,10 +2,20 @@
 
 class Solution:
     def runningSum(self, nums: list[int]) -> list[int]:
-        pass
+        # We can store  sums we've already computed. 
+        # Instead of calculating the sum each time, we just look at the last value in the array, and then add the next value to it. Apart from for index 0
+
+        resultNums = [nums[0]]
+
+        for i in range(1, len(nums)):
+            new = resultNums[i-1] + nums[i]
+            resultNums.append(new)
+
+        return resultNums
 
 
-# Time Complexity:
+
+# Time Complexity: O(n)
 
 test_cases = [
     [1, 2, 3, 4],
