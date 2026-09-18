@@ -2,7 +2,26 @@
 
 class Solution:
     def twoSum(self, nums: list[int], target: int) -> list[int]:
-        pass
+        """
+        create a map, where you store the nuber each number needs to reach the target
+        check the map to see if that already exists
+        """
+
+        toTarget = {}
+
+        for i, num in enumerate(nums):
+            req = target - num
+
+            # if req < 0:
+            #     continue
+
+         
+
+            if req in toTarget:
+                return [toTarget[req], i]
+            else:
+                # add to num to dictionary, with index as the value
+                toTarget[num] = i
 
 
 # Time Complexity:
