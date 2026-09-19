@@ -2,7 +2,23 @@
 
 class Solution:
     def groupAnagrams(self, strs: list[str]) -> list[list[str]]:
-        pass
+        anagramMap: {str, list[str]} = {}
+
+        for str in strs:
+            sortedStrArr = sorted(str)
+            sortedStr = "".join(sortedStrArr)
+
+            if sortedStr in anagramMap:
+                anagramMap[sortedStr].append(str)
+            else: 
+                anagramMap[sortedStr] = [str]
+
+        outputArr = []
+        for key in anagramMap.keys():
+            outputArr.append(anagramMap[key])
+
+        return outputArr
+
 
 
 # Time Complexity:
