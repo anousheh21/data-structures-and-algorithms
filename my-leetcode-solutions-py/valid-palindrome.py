@@ -3,8 +3,33 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         """
-        
+        convert to lower case
+        remove all non-alphanumeric characters
+        reads same forward and backward (use pointers)
         """
+
+        lowercase = s.lower()
+
+        alphanumArr = []
+        for char in lowercase:
+            if char.isalnum():
+                alphanumArr.append(char)
+
+        alphanumStr = "".join(alphanumArr)
+
+        startPointer = 0
+        endPointer = len(alphanumStr) - 1
+
+        while startPointer < endPointer:
+            if alphanumStr[startPointer] != alphanumStr[endPointer]:
+                return False
+
+            startPointer+=1
+            endPointer-=1
+
+        return True
+
+        
 
 
 # Time Complexity:
