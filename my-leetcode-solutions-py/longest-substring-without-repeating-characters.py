@@ -7,40 +7,36 @@ class Solution:
         endPointer = 0
 
         if len(s) == 0:
-            maxLen = 0
+            return 0
 
-        while endPointer < len(s):
+        currentWindow = set()
+        currentWindow.add(s[startPointer])
+
+        while endPointer < len(s)-1:            
             if startPointer == endPointer:
                 endPointer += 1
 
-                if endPointer >= len(s):
-                    break
-
-                if s[startPointer] != s[endPointer] and startPointer == 0 and endPointer == 1:
-                    # print(f"{startPointer} and {endPointer}")
+                if s[startPointer] == s[endPointer]:
+                    startPointer += 1
+                elif maxLen == 1:
                     maxLen = 2
-                    
 
-
-            elif s[startPointer] == s[endPointer]:
+                currentWindow.add(s[endPointer])
+            
+            elif s[endPointer+1] in currentWindow:
+                currentWindow.remove(s[startPointer])
                 startPointer += 1
 
-            elif s[endPointer] in s[startPointer:endPointer]:
-                # print(s[startPointer:endPointer+1])
-                startPointer += 1 
-
             else:
-                difference = endPointer - startPointer + 1
-                
-                if difference > maxLen:
-                    maxLen = difference
-                    # print({s[startPointer:endPointer+1]})
-
                 endPointer += 1
 
-                if endPointer >= len(s):
-                    break
-
+                currentWindow.add(s[endPointer])
+                if(len(currentWindow) > maxLen):
+                    maxLen = len(currentWindow)
+        
+        if(len(currentWindow) > maxLen):
+            maxLen = len(currentWindow)
+            
         return maxLen
        
 
@@ -49,7 +45,7 @@ class Solution:
 
 # Time Complexity:
 
-s_test_cases = ["abcabcbb", "bbbbb", "pwwkew", "<Dx", "S", "mmq", "mq", "kbdbl"]
+s_test_cases = ["abcabcbb", "bbbbb", "pwwkew", "<Dx", "S", "mmq", "mq", "kbdbl", "edd"]
 
 solution = Solution()
 
