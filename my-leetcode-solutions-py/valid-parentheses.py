@@ -2,12 +2,39 @@
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        pass
+        """
+        This is a LIFO problem, so a stack. Just represent as an array
+        """
+
+        # if len(s) % 2 != 0:
+        #     return False
+
+        stack = []
+        for char in s:
+            if char == "(" or char == "[" or char == "{":
+                stack.append(char)
+            elif len(stack) == 0:
+                return False
+            elif char == ")" and stack[-1] == "(":
+                stack.pop()
+            elif char == "]" and stack[-1] == "[":
+                stack.pop()
+            elif char == "}" and stack[-1] == "{":
+                stack.pop()
+            else:
+                return False
+
+        if len(stack) != 0:
+            return False
+
+        return True
+            
+
 
 
 # Time Complexity:
 
-s_test_cases = ["()", "()[]{}", "(]", "([])", "([)]"]
+s_test_cases = ["()", "()[]{}", "(]", "([])", "([)]", "()"]
 
 solution = Solution()
 
