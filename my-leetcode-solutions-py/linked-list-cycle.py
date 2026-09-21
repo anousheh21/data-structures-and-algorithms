@@ -12,7 +12,32 @@ class ListNode:
 
 class Solution:
     def hasCycle(self, head: Optional[ListNode]) -> bool:
-        pass
+        """
+        Do we use slow and fast pointers, where if the slow pointer ever equals the fast pointer, return true. But if we get to a node where node.next = None, then return false.
+        Faster pointer moves twice as fast as the slow pointer
+        """
+
+        if head == None or head.next == None:
+            return False
+
+
+        slow = head
+        fast = head.next
+
+        while fast != None:
+            if fast == slow:
+                return True
+
+            fast = fast.next 
+
+            if fast == slow:
+                return True
+
+            fast = fast.next if fast is not None else None
+            slow = slow.next
+
+        return False
+
 
 
 # Time Complexity:
@@ -21,9 +46,10 @@ head_test_cases = [
     [3, 2, 0, -4],
     [1, 2],
     [1],
+    [1, 2]
 ]
 
-pos_test_cases = [1, 0, -1]
+pos_test_cases = [1, 0, -1, -1]
 
 solution = Solution()
 
