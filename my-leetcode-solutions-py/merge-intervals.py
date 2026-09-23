@@ -2,7 +2,23 @@
 
 class Solution:
     def merge(self, intervals: list[list[int]]) -> list[list[int]]:
-        pass
+        # sort first
+        intervals.sort(key=lambda x: x[0])
+
+        currentInterval = intervals[0]
+        outputIntervals = []
+
+        for i in range(1, len(intervals)):
+            if currentInterval[1] >= intervals[i][0]:
+                if currentInterval[1] < intervals[i][1]:
+                    currentInterval[1] = intervals[i][1]
+            else:
+                outputIntervals.append(currentInterval)
+                currentInterval = intervals[i]
+
+        outputIntervals.append(currentInterval)
+
+        return outputIntervals
 
 
 # Time Complexity:
