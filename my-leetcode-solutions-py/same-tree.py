@@ -10,7 +10,27 @@ class TreeNode:
 
 class Solution:
     def isSameTree(self, p: TreeNode | None, q: TreeNode | None) -> bool:
-        pass
+        # base case
+        if p == None and q == None:
+            return True
+        elif p == None:
+            return False
+        elif q == None: 
+            return False
+
+        if self.isSameTree(p.left, q.left) == False or self.isSameTree(p.right, q.right) == False:
+            return False
+        elif p.val != q.val:
+            return False
+        else:
+            return True
+
+        # if p.val != q.val:
+        #     return False
+
+        # self.isSameTree(p.left, q.left)
+        # return self.isSameTree(p.right, q.right)
+
 
 
 # Time Complexity:
