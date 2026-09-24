@@ -66,8 +66,6 @@ class Solution:
         if root is None:
             return []
 
-        outputArr = [[root]]
-        outputIntArr = [[root.val]]
 
 
         while len(queue) > 0:
@@ -76,24 +74,10 @@ class Solution:
 
             if current is not None and current.left is not None:
                 queue.append(current.left)
-                if len(outputArr) > 1 and current in outputArr[-2]:
-                    outputArr[-1].append(current.left)
-                    outputIntArr[-1].append(current.left.val)
-                else:
-                    outputArr.append([current.left])
-                    outputIntArr.append([current.left.val])
-
 
             if current is not None and current.right is not None:
                 queue.append(current.right)
-                if len(outputArr) > 1 and current in outputArr[-2]:
-                    outputArr[-1].append(current.right)
-                    outputIntArr[-1].append(current.right.val)
-                else:
-                    outputArr.append([current.right])
-                    outputIntArr.append([current.right.val])
 
-        return outputIntArr
 
 
 
