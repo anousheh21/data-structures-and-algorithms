@@ -7,6 +7,51 @@ class TreeNode:
         self.left = left
         self.right = right
 
+# from collections import deque
+
+# class Solution:
+#     def levelOrder(self, root: TreeNode | None) -> list[list[int]]:
+#         """
+#         BFS (no recursion). Once all nodes at a level have been traversed, move to the next level
+#         """
+
+#         queue = deque()
+#         queue.append(root)
+
+#         if root is None:
+#             return []
+
+#         outputArr = [[root]]
+#         outputIntArr = [[root.val]]
+
+
+#         while len(queue) > 0:
+#             current = queue.popleft()
+#             # print(current.val if current is not None else None)
+
+#             if current is not None and current.left is not None:
+#                 queue.append(current.left)
+#                 if len(outputArr) > 1 and current in outputArr[-2]:
+#                     outputArr[-1].append(current.left)
+#                     outputIntArr[-1].append(current.left.val)
+#                 else:
+#                     outputArr.append([current.left])
+#                     outputIntArr.append([current.left.val])
+
+
+#             if current is not None and current.right is not None:
+#                 queue.append(current.right)
+#                 if len(outputArr) > 1 and current in outputArr[-2]:
+#                     outputArr[-1].append(current.right)
+#                     outputIntArr[-1].append(current.right.val)
+#                 else:
+#                     outputArr.append([current.right])
+#                     outputIntArr.append([current.right.val])
+
+#         return outputIntArr
+
+
+
 from collections import deque
 
 class Solution:
@@ -49,11 +94,6 @@ class Solution:
                     outputIntArr.append([current.right.val])
 
         return outputIntArr
-
-
-
-
-
 
 
 
