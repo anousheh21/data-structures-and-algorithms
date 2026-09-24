@@ -66,19 +66,28 @@ class Solution:
         if root is None:
             return []
 
-
+        levelSize = len(queue)
+        outputArr = [[]]
 
         while len(queue) > 0:
             current = queue.popleft()
             # print(current.val if current is not None else None)
-
-            if current is not None and current.left is not None:
+            
+            if levelSize > 0:
+                outputArr[-1].append(current.val)
+                levelSize -= 1
+                
+            if current.left is not None:
                 queue.append(current.left)
 
-            if current is not None and current.right is not None:
+            if current.right is not None:
                 queue.append(current.right)
 
+            if levelSize == 0 and len(queue) > 0:
+                outputArr.append([])
+                levelSize = len(queue)
 
+        return outputArr
 
 
 
